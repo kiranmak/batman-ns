@@ -40,10 +40,11 @@ class BatNode:
         (b1_wt1, b2_wt0) = connect(self.node, other.node, myif, otherif)
 
     def set_mac_addresses(self, idx):
-        ifs = {"wt0": "ba:be:00:00:ba:",
-               "wt1": "ba:be:00:00:bb:",
-               "sge0":"ba:be:00:00:bc:",
-               "sge1":"ba:be:00:00:bd:" }
+        ifs = {"wt0": "a4:f9:10:00:ba:",
+               "wt1": "a4:f9:10:00:bb:",
+               "sge0":"a4:f9:10:00:bc:",
+               "sge1":"a4:f9:10:00:bd:" ,
+               "bat0":"a4:f9:10:00:be:" }
         for if_name, prefix in ifs.items():
             cmd = f" ifconfig {if_name} hw ether "
             mac = prefix + '{:#02d}'.format(idx)
@@ -51,7 +52,7 @@ class BatNode:
 
         for hidx, h in enumerate(self.hosts):
             cmd = f" ifconfig eth0 hw ether "
-            prefix = 'ba:be:00:00:{:#02d}:'.format(idx)
+            prefix = 'a4:f9:10:00:{:#02d}:'.format(idx)
             mac = prefix + '{:#02d}'.format(hidx)
             print( f"ip netns exec {h} {cmd} {mac}")
             exec_subprocess( f"ip netns exec {h} {cmd} {mac}")
